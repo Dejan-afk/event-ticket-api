@@ -1,0 +1,55 @@
+### Symfony ###
+/.env.local
+/.env.local.php
+/.env.*.local
+
+/config/secrets/prod/prod.decrypt.private.php
+
+/public/bundles/
+
+/var/*
+!/var/cache
+!/var/log
+!/var/sessions
+
+/vendor/
+
+### Doctrine ###
+/migrations/*_tmp.php
+/var/doctrine/
+
+### Docker ###
+/docker-compose.override.yml
+/.docker/
+
+### Logs ###
+*.log
+
+### IDE ###
+/.idea/
+/.vscode/*
+!.vscode/extensions.json
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### PHPUnit ###
+/.phpunit.result.cache
+
+### Symfony CLI ###
+.symfony/
+
+### API Platform ###
+/public/docs/
+/public/openapi.json
+
+### Messenger ###
+/var/transport/
+
+### Composer ###
+/composer.phar
+
+### Misc ###
+*.swp
+*.swo
