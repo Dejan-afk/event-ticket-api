@@ -1,4 +1,5 @@
 ### Symfony ###
+/.env
 /.env.local
 /.env.local.php
 /.env.*.local
@@ -54,3 +55,6 @@ Thumbs.db
 ### Misc ###
 *.swp
 *.swo
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
