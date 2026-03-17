@@ -18,8 +18,8 @@ class BoardList
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'boardLists')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Project $project_id = null;
+    #[ORM\JoinColumn(name: 'project_id', nullable: false)]
+    private ?Project $projectId = null;
 
     #[ORM\Column(length: 128)]
     private ?string $title = null;
@@ -27,16 +27,16 @@ class BoardList
     #[ORM\Column]
     private ?int $position = null;
 
-    #[ORM\Column]
-    private ?\DateTime $created_at = null;
+    #[ORM\Column(name: 'created_at')]
+    private ?\DateTime $createdAt = null;
 
-    #[ORM\Column]
-    private ?\DateTime $updated_at = null;
+    #[ORM\Column(name: 'updated_at')]
+    private ?\DateTime $updatedAt = null;
 
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'board_list_id')]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'boardListId', orphanRemoval: true)]
     private Collection $tasks;
 
     public function __construct()
@@ -51,12 +51,12 @@ class BoardList
 
     public function getProjectId(): ?Project
     {
-        return $this->project_id;
+        return $this->projectId;
     }
 
-    public function setProjectId(?Project $project_id): static
+    public function setProjectId(?Project $projectId): static
     {
-        $this->project_id = $project_id;
+        $this->projectId = $projectId;
 
         return $this;
     }
@@ -87,24 +87,24 @@ class BoardList
 
     public function getCreatedAt(): ?\DateTime
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $created_at): static
+    public function setCreatedAt(\DateTime $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTime
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): static
+    public function setUpdatedAt(\DateTime $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

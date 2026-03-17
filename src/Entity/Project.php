@@ -30,31 +30,31 @@ class Project
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $priority = null;
 
-    #[ORM\Column]
-    private ?bool $is_active = null;
+    #[ORM\Column(name: 'is_active')]
+    private ?bool $isActive = null;
 
-    #[ORM\Column]
-    private ?\DateTime $created_at = null;
+    #[ORM\Column(name: 'created_at')]
+    private ?\DateTime $createdAt = null;
 
-    #[ORM\Column]
-    private ?\DateTime $updated_at = null;
+    #[ORM\Column(name: 'updated_at')]
+    private ?\DateTime $updatedAt = null;
 
     /**
      * @var Collection<int, BoardList>
      */
-    #[ORM\OneToMany(targetEntity: BoardList::class, mappedBy: 'project_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: BoardList::class, mappedBy: 'projectId', orphanRemoval: true)]
     private Collection $boardLists;
 
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectId', orphanRemoval: true)]
     private Collection $tasks;
 
     /**
      * @var Collection<int, ProjectMember>
      */
-    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'project_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'projectId', orphanRemoval: true)]
     private Collection $projectMembers;
 
     public function __construct()
@@ -119,36 +119,36 @@ class Project
 
     public function isActive(): ?bool
     {
-        return $this->is_active;
+        return $this->isActive;
     }
 
-    public function setIsActive(bool $is_active): static
+    public function setIsActive(bool $isActive): static
     {
-        $this->is_active = $is_active;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTime
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $created_at): static
+    public function setCreatedAt(\DateTime $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTime
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): static
+    public function setUpdatedAt(\DateTime $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

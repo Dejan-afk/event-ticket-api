@@ -14,15 +14,15 @@ class TaskAssignment
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'taskAssignments')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Task $task_id = null;
+    #[ORM\JoinColumn(name: 'task_id', nullable: false)]
+    private ?Task $taskId = null;
 
     #[ORM\ManyToOne(inversedBy: 'taskAssignments')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
+    #[ORM\JoinColumn(name: 'user_id', nullable: false)]
+    private ?User $userId = null;
 
-    #[ORM\Column]
-    private ?\DateTime $assigned_at = null;
+    #[ORM\Column(name: 'assigned_at')]
+    private ?\DateTime $assignedAt = null;
 
     public function getId(): ?int
     {
@@ -31,36 +31,36 @@ class TaskAssignment
 
     public function getTaskId(): ?Task
     {
-        return $this->task_id;
+        return $this->taskId;
     }
 
-    public function setTaskId(?Task $task_id): static
+    public function setTaskId(?Task $taskId): static
     {
-        $this->task_id = $task_id;
+        $this->taskId = $taskId;
 
         return $this;
     }
 
     public function getUserId(): ?User
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setUserId(?User $userId): static
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }
 
     public function getAssignedAt(): ?\DateTime
     {
-        return $this->assigned_at;
+        return $this->assignedAt;
     }
 
-    public function setAssignedAt(\DateTime $assigned_at): static
+    public function setAssignedAt(\DateTime $assignedAt): static
     {
-        $this->assigned_at = $assigned_at;
+        $this->assignedAt = $assignedAt;
 
         return $this;
     }

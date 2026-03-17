@@ -15,18 +15,18 @@ class ProjectMember
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'projectMembers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_id = null;
+    #[ORM\JoinColumn(name: 'user_id', nullable: false)]
+    private ?User $userId = null;
 
     #[ORM\ManyToOne(inversedBy: 'projectMembers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Project $project_id = null;
+    #[ORM\JoinColumn(name: 'project_id', nullable: false)]
+    private ?Project $projectId = null;
 
     #[ORM\Column(length: 128)]
     private ?string $role = null;
 
-    #[ORM\Column]
-    private ?\DateTime $created_at = null;
+    #[ORM\Column(name: 'created_at')]
+    private ?\DateTime $createdAt = null;
 
     public function getId(): ?int
     {
@@ -35,24 +35,24 @@ class ProjectMember
 
     public function getUserId(): ?User
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(?User $user_id): static
+    public function setUserId(?User $userId): static
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }
 
     public function getProjectId(): ?Project
     {
-        return $this->project_id;
+        return $this->projectId;
     }
 
-    public function setProjectId(?Project $project_id): static
+    public function setProjectId(?Project $projectId): static
     {
-        $this->project_id = $project_id;
+        $this->projectId = $projectId;
 
         return $this;
     }
@@ -71,12 +71,12 @@ class ProjectMember
 
     public function getCreatedAt(): ?\DateTime
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $created_at): static
+    public function setCreatedAt(\DateTime $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

@@ -36,28 +36,28 @@ class User
     #[ORM\Column]
     private array $roles = [];
 
-    #[ORM\Column]
-    private ?\DateTime $created_at = null;
+    #[ORM\Column(name: "created_at")]
+    private ?\DateTime $createdAt = null;
 
-    #[ORM\Column]
-    private ?\DateTime $updated_at = null;
+    #[ORM\Column(name: "updated_at")]
+    private ?\DateTime $updatedAt = null;
 
     /**
      * @var Collection<int, ProjectMember>
      */
-    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'user_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'userId', orphanRemoval: true)]
     private Collection $projectMembers;
 
     /**
      * @var Collection<int, TaskAssignment>
      */
-    #[ORM\OneToMany(targetEntity: TaskAssignment::class, mappedBy: 'user_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TaskAssignment::class, mappedBy: 'userId', orphanRemoval: true)]
     private Collection $taskAssignments;
 
     /**
      * @var Collection<int, TaskComment>
      */
-    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: 'user_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: 'userId', orphanRemoval: true)]
     private Collection $taskComments;
 
     public function __construct()
@@ -146,24 +146,24 @@ class User
 
     public function getCreatedAt(): ?\DateTime
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $created_at): static
+    public function setCreatedAt(\DateTime $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTime
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): static
+    public function setUpdatedAt(\DateTime $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

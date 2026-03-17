@@ -19,12 +19,12 @@ class Task
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Project $project_id = null;
+    #[ORM\JoinColumn(name: 'project_id', nullable: false)]
+    private ?Project $projectId = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?BoardList $board_list_id = null;
+    #[ORM\JoinColumn(name: 'board_list_id', nullable: false)]
+    private ?BoardList $boardListId = null;
 
     #[ORM\Column(length: 128)]
     private ?string $title = null;
@@ -35,28 +35,28 @@ class Task
     #[ORM\Column]
     private ?int $position = null;
 
-    #[ORM\Column]
-    private ?bool $is_active = null;
+    #[ORM\Column(name: 'is_active')]
+    private ?bool $isActive = null;
 
     #[ORM\Column]
     private ?\DateTime $due = null;
 
-    #[ORM\Column]
-    private ?\DateTime $created_at = null;
+    #[ORM\Column(name: 'created_at')]
+    private ?\DateTime $createdAt = null;
 
-    #[ORM\Column]
-    private ?\DateTime $updated_at = null;
+    #[ORM\Column(name: 'updated_at')]
+    private ?\DateTime $updatedAt = null;
 
     /**
      * @var Collection<int, TaskAssignment>
      */
-    #[ORM\OneToMany(targetEntity: TaskAssignment::class, mappedBy: 'task_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TaskAssignment::class, mappedBy: 'taskId', orphanRemoval: true)]
     private Collection $taskAssignments;
 
     /**
      * @var Collection<int, TaskComment>
      */
-    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: 'task_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: 'taskId', orphanRemoval: true)]
     private Collection $taskComments;
 
     public function __construct()
@@ -72,24 +72,24 @@ class Task
 
     public function getProjectId(): ?Project
     {
-        return $this->project_id;
+        return $this->projectId;
     }
 
-    public function setProjectId(?Project $project_id): static
+    public function setProjectId(?Project $projectId): static
     {
-        $this->project_id = $project_id;
+        $this->projectId = $projectId;
 
         return $this;
     }
 
     public function getBoardListId(): ?BoardList
     {
-        return $this->board_list_id;
+        return $this->boardListId;
     }
 
-    public function setBoardListId(?BoardList $board_list_id): static
+    public function setBoardListId(?BoardList $boardListId): static
     {
-        $this->board_list_id = $board_list_id;
+        $this->boardListId = $boardListId;
 
         return $this;
     }
@@ -132,12 +132,12 @@ class Task
 
     public function isActive(): ?bool
     {
-        return $this->is_active;
+        return $this->isActive;
     }
 
-    public function setIsActive(bool $is_active): static
+    public function setIsActive(bool $isActive): static
     {
-        $this->is_active = $is_active;
+        $this->isActive = $isActive;
 
         return $this;
     }
@@ -156,24 +156,24 @@ class Task
 
     public function getCreatedAt(): ?\DateTime
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $created_at): static
+    public function setCreatedAt(\DateTime $createdAt): static
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTime
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): static
+    public function setUpdatedAt(\DateTime $updatedAt): static
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
