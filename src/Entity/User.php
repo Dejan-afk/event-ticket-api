@@ -83,19 +83,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, ProjectMember>
      */
-    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'userId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $projectMembers;
 
     /**
      * @var Collection<int, TaskAssignment>
      */
-    #[ORM\OneToMany(targetEntity: TaskAssignment::class, mappedBy: 'userId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TaskAssignment::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $taskAssignments;
 
     /**
      * @var Collection<int, TaskComment>
      */
-    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: 'userId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $taskComments;
 
     public function __construct()

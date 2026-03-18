@@ -42,19 +42,19 @@ class Project
     /**
      * @var Collection<int, BoardList>
      */
-    #[ORM\OneToMany(targetEntity: BoardList::class, mappedBy: 'projectId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: BoardList::class, mappedBy: 'project', orphanRemoval: true)]
     private Collection $boardLists;
 
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'projectId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'project', orphanRemoval: true)]
     private Collection $tasks;
 
     /**
      * @var Collection<int, ProjectMember>
      */
-    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'projectId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'project', orphanRemoval: true)]
     private Collection $projectMembers;
 
     public function __construct()

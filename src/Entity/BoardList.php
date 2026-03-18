@@ -36,7 +36,7 @@ class BoardList
     /**
      * @var Collection<int, Task>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'boardListId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'boardList', orphanRemoval: true)]
     private Collection $tasks;
 
     public function __construct()

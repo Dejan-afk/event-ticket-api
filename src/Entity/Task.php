@@ -50,13 +50,13 @@ class Task
     /**
      * @var Collection<int, TaskAssignment>
      */
-    #[ORM\OneToMany(targetEntity: TaskAssignment::class, mappedBy: 'taskId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TaskAssignment::class, mappedBy: 'task', orphanRemoval: true)]
     private Collection $taskAssignments;
 
     /**
      * @var Collection<int, TaskComment>
      */
-    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: 'taskId', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: TaskComment::class, mappedBy: 'task', orphanRemoval: true)]
     private Collection $taskComments;
 
     public function __construct()
