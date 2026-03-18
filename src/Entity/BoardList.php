@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\BoardListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BoardListRepository::class)]
@@ -15,6 +16,7 @@ class BoardList
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['project:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'boardLists')]
@@ -22,15 +24,19 @@ class BoardList
     private ?Project $project = null;
 
     #[ORM\Column(length: 128)]
+    #[Groups(['project:read'])]
     private ?string $title = null;
 
     #[ORM\Column]
+    #[Groups(['project:read'])]
     private ?int $position = null;
 
     #[ORM\Column(name: 'created_at')]
+    #[Groups(['project:read'])]
     private ?\DateTime $createdAt = null;
 
     #[ORM\Column(name: 'updated_at')]
+    #[Groups(['project:read'])]
     private ?\DateTime $updatedAt = null;
 
     /**

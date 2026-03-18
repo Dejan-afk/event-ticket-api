@@ -7,42 +7,81 @@ use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use App\Dto\ProjectCreateDto;
+use App\State\ProjectCreateProcessor;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['project:read']],
+    denormalizationContext: ['groups' => ['project:write']],
+    operations: [
+        new Post(
+            security: 'is_granted("ROLE_USER")',
+            input: ProjectCreateDto::class,
+            processor: ProjectCreateProcessor::class
+        ),
+        new GetCollection(
+            security: 'is_granted("ROLE_USER")'
+        ),
+        new Get(
+            security: 'is_granted("ROLE_USER")'
+        ),
+        new Patch(
+            security: 'is_granted("PROJECT_EDIT", object)'
+        ),
+        new Delete(
+            security: 'is_granted("PROJECT_DELETE", object)'
+        )
+    ]
+)]
 class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['project:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 128)]
+    #[Groups(['project:read', 'project:write'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['project:read', 'project:write'])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(['project:read', 'project:write'])]
     private ?\DateTime $due = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['project:read', 'project:write'])]
     private ?string $priority = null;
 
     #[ORM\Column(name: 'is_active')]
+    #[Groups(['project:read'])]
     private ?bool $isActive = null;
 
     #[ORM\Column(name: 'created_at')]
+    #[Groups(['project:read'])]
     private ?\DateTime $createdAt = null;
 
     #[ORM\Column(name: 'updated_at')]
+    #[Groups(['project:read'])]
     private ?\DateTime $updatedAt = null;
 
     /**
      * @var Collection<int, BoardList>
      */
-    #[ORM\OneToMany(targetEntity: BoardList::class, mappedBy: 'project', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: BoardList::class, mappedBy: 'project', orphanRemoval: true, cascade: ['persist'])]
+    #[Groups(['project:read'])]
     private Collection $boardLists;
 
     /**
@@ -54,7 +93,8 @@ class Project
     /**
      * @var Collection<int, ProjectMember>
      */
-    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'project', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ProjectMember::class, mappedBy: 'project', orphanRemoval: true, cascade: ['persist'])]
+    #[Groups(['project:read'])]
     private Collection $projectMembers;
 
     public function __construct()
