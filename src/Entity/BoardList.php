@@ -19,7 +19,7 @@ class BoardList
 
     #[ORM\ManyToOne(inversedBy: 'boardLists')]
     #[ORM\JoinColumn(name: 'project_id', nullable: false)]
-    private ?Project $projectId = null;
+    private ?Project $project = null;
 
     #[ORM\Column(length: 128)]
     private ?string $title = null;
@@ -49,14 +49,14 @@ class BoardList
         return $this->id;
     }
 
-    public function getProjectId(): ?Project
+    public function getProject(): ?Project
     {
-        return $this->projectId;
+        return $this->project;
     }
 
-    public function setProjectId(?Project $projectId): static
+    public function setProject(?Project $project): static
     {
-        $this->projectId = $projectId;
+        $this->project = $project;
 
         return $this;
     }
@@ -121,7 +121,7 @@ class BoardList
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks->add($task);
-            $task->setBoardListId($this);
+            $task->setBoardList($this);
         }
 
         return $this;
@@ -131,8 +131,8 @@ class BoardList
     {
         if ($this->tasks->removeElement($task)) {
             // set the owning side to null (unless already changed)
-            if ($task->getBoardListId() === $this) {
-                $task->setBoardListId(null);
+            if ($task->getBoardList() === $this) {
+                $task->setBoardList(null);
             }
         }
 

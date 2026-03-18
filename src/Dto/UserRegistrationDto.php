@@ -12,14 +12,17 @@ class UserRegistrationDto
     public string $email;
 
     #[Assert\NotBlank]
-    #[Assert\Length(min: 8)]
+    #[Assert\Length(min: 8, max: 255)]
     public string $password;
 
     #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 50)]
     public string $firstname;
 
     #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 50)]
     public string $lastname;
-
-    public ?string $job = null; // Optional
+    
+    #[Assert\Length(min: 2, max: 128)]
+    public ?string $job = null;
 }

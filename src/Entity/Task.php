@@ -20,11 +20,11 @@ class Task
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(name: 'project_id', nullable: false)]
-    private ?Project $projectId = null;
+    private ?Project $project = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(name: 'board_list_id', nullable: false)]
-    private ?BoardList $boardListId = null;
+    private ?BoardList $boardList = null;
 
     #[ORM\Column(length: 128)]
     private ?string $title = null;
@@ -70,26 +70,26 @@ class Task
         return $this->id;
     }
 
-    public function getProjectId(): ?Project
+    public function getProject(): ?Project
     {
-        return $this->projectId;
+        return $this->project;
     }
 
-    public function setProjectId(?Project $projectId): static
+    public function setProject(?Project $project): static
     {
-        $this->projectId = $projectId;
+        $this->project = $project;
 
         return $this;
     }
 
-    public function getBoardListId(): ?BoardList
+    public function getBoardList(): ?BoardList
     {
-        return $this->boardListId;
+        return $this->boardList;
     }
 
-    public function setBoardListId(?BoardList $boardListId): static
+    public function setBoardList(?BoardList $boardList): static
     {
-        $this->boardListId = $boardListId;
+        $this->boardList = $boardList;
 
         return $this;
     }
@@ -190,7 +190,7 @@ class Task
     {
         if (!$this->taskAssignments->contains($taskAssignment)) {
             $this->taskAssignments->add($taskAssignment);
-            $taskAssignment->setTaskId($this);
+            $taskAssignment->setTask($this);
         }
 
         return $this;
@@ -200,8 +200,8 @@ class Task
     {
         if ($this->taskAssignments->removeElement($taskAssignment)) {
             // set the owning side to null (unless already changed)
-            if ($taskAssignment->getTaskId() === $this) {
-                $taskAssignment->setTaskId(null);
+            if ($taskAssignment->getTask() === $this) {
+                $taskAssignment->setTask(null);
             }
         }
 
@@ -220,7 +220,7 @@ class Task
     {
         if (!$this->taskComments->contains($taskComment)) {
             $this->taskComments->add($taskComment);
-            $taskComment->setTaskId($this);
+            $taskComment->setTask($this);
         }
 
         return $this;
@@ -230,8 +230,8 @@ class Task
     {
         if ($this->taskComments->removeElement($taskComment)) {
             // set the owning side to null (unless already changed)
-            if ($taskComment->getTaskId() === $this) {
-                $taskComment->setTaskId(null);
+            if ($taskComment->getTask() === $this) {
+                $taskComment->setTask(null);
             }
         }
 

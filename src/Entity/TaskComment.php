@@ -18,11 +18,11 @@ class TaskComment
 
     #[ORM\ManyToOne(inversedBy: 'taskComments')]
     #[ORM\JoinColumn(name: 'task_id', nullable: false)]
-    private ?Task $taskId = null;
+    private ?Task $task = null;
 
     #[ORM\ManyToOne(inversedBy: 'taskComments')]
     #[ORM\JoinColumn(name: 'user_id', nullable: false)]
-    private ?User $userId = null;
+    private ?User $user = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
@@ -32,26 +32,26 @@ class TaskComment
         return $this->id;
     }
 
-    public function getTaskId(): ?Task
+    public function getTask(): ?Task
     {
-        return $this->taskId;
+        return $this->task;
     }
 
-    public function setTaskId(?Task $taskId): static
+    public function setTask(?Task $task): static
     {
-        $this->taskId = $taskId;
+        $this->task = $task;
 
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId(?User $userId): static
+    public function setUser(?User $user): static
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }

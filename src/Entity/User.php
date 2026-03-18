@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Metadata\ApiResource;
@@ -14,21 +15,29 @@ use Doctrine\Common\Collections\Collection;
 use App\Dto\UserRegistrationDto;
 use App\State\UserRegistrationProcessor;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
+use App\State\CurrentUserProvider;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'email_unique', columns: ['email'])]
 #[ApiResource(
+    normalizationContext: ['groups' => ['user:read']],
+    denormalizationContext: ['groups' => ['user:write']],
     operations: [
         new Post(
             uriTemplate: '/register',
             input: UserRegistrationDto::class,
             processor: UserRegistrationProcessor::class,
-            formats: ['json'],
             security: 'is_granted("PUBLIC_ACCESS")',
         ),
-        new GetCollection(security: 'is_granted("ROLE_USER")'),
-        new Get(security: 'is_granted("ROLE_USER") or object == user')
+        new Get(security: 'object == user or is_granted("ROLE_ADMIN")'),
+        new GetCollection(security: 'is_granted("ROLE_ADMIN")'),
+        new Get(
+            uriTemplate: '/me',
+            provider: CurrentUserProvider::class,
+            security: 'is_granted("ROLE_USER")',
+        )
     ]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -36,30 +45,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['user:read'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 50)]
+    #[Groups(['user:read'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['user:read'])]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[ApiProperty(readable: false, writable: false)]
     private ?string $password = null;
 
     #[ORM\Column(length: 128, nullable: true)]
+    #[Groups(['user:read'])]
     private ?string $job = null;
 
     #[ORM\Column]
+    #[ApiProperty(readable: false, writable: false)]
     private array $roles = [];
 
     #[ORM\Column(name: "created_at")]
+    #[Groups(['user:read'])]
     private ?\DateTime $createdAt = null;
 
     #[ORM\Column(name: "updated_at")]
+    #[Groups(['user:read'])]
     private ?\DateTime $updatedAt = null;
 
     /**
@@ -204,7 +222,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->projectMembers->contains($projectMember)) {
             $this->projectMembers->add($projectMember);
-            $projectMember->setUserId($this);
+            $projectMember->setUser($this);
         }
 
         return $this;
@@ -214,8 +232,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->projectMembers->removeElement($projectMember)) {
             // set the owning side to null (unless already changed)
-            if ($projectMember->getUserId() === $this) {
-                $projectMember->setUserId(null);
+            if ($projectMember->getUser() === $this) {
+                $projectMember->setUser(null);
             }
         }
 
@@ -234,7 +252,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->taskAssignments->contains($taskAssignment)) {
             $this->taskAssignments->add($taskAssignment);
-            $taskAssignment->setUserId($this);
+            $taskAssignment->setUser($this);
         }
 
         return $this;
@@ -244,8 +262,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->taskAssignments->removeElement($taskAssignment)) {
             // set the owning side to null (unless already changed)
-            if ($taskAssignment->getUserId() === $this) {
-                $taskAssignment->setUserId(null);
+            if ($taskAssignment->getUser() === $this) {
+                $taskAssignment->setUser(null);
             }
         }
 
@@ -264,7 +282,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->taskComments->contains($taskComment)) {
             $this->taskComments->add($taskComment);
-            $taskComment->setUserId($this);
+            $taskComment->setUser($this);
         }
 
         return $this;
@@ -274,8 +292,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->taskComments->removeElement($taskComment)) {
             // set the owning side to null (unless already changed)
-            if ($taskComment->getUserId() === $this) {
-                $taskComment->setUserId(null);
+            if ($taskComment->getUser() === $this) {
+                $taskComment->setUser(null);
             }
         }
 

@@ -165,7 +165,7 @@ class Project
     {
         if (!$this->boardLists->contains($boardList)) {
             $this->boardLists->add($boardList);
-            $boardList->setProjectId($this);
+            $boardList->setProject($this);
         }
 
         return $this;
@@ -175,8 +175,8 @@ class Project
     {
         if ($this->boardLists->removeElement($boardList)) {
             // set the owning side to null (unless already changed)
-            if ($boardList->getProjectId() === $this) {
-                $boardList->setProjectId(null);
+            if ($boardList->getProject() === $this) {
+                $boardList->setProject(null);
             }
         }
 
@@ -195,7 +195,7 @@ class Project
     {
         if (!$this->tasks->contains($task)) {
             $this->tasks->add($task);
-            $task->setProjectId($this);
+            $task->setProject($this);
         }
 
         return $this;
@@ -205,8 +205,8 @@ class Project
     {
         if ($this->tasks->removeElement($task)) {
             // set the owning side to null (unless already changed)
-            if ($task->getProjectId() === $this) {
-                $task->setProjectId(null);
+            if ($task->getProject() === $this) {
+                $task->setProject(null);
             }
         }
 
@@ -225,7 +225,7 @@ class Project
     {
         if (!$this->projectMembers->contains($projectMember)) {
             $this->projectMembers->add($projectMember);
-            $projectMember->setProjectId($this);
+            $projectMember->setProject($this);
         }
 
         return $this;
@@ -235,8 +235,8 @@ class Project
     {
         if ($this->projectMembers->removeElement($projectMember)) {
             // set the owning side to null (unless already changed)
-            if ($projectMember->getProjectId() === $this) {
-                $projectMember->setProjectId(null);
+            if ($projectMember->getProject() === $this) {
+                $projectMember->setProject(null);
             }
         }
 

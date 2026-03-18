@@ -16,11 +16,11 @@ class ProjectMember
 
     #[ORM\ManyToOne(inversedBy: 'projectMembers')]
     #[ORM\JoinColumn(name: 'user_id', nullable: false)]
-    private ?User $userId = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'projectMembers')]
     #[ORM\JoinColumn(name: 'project_id', nullable: false)]
-    private ?Project $projectId = null;
+    private ?Project $project = null;
 
     #[ORM\Column(length: 128)]
     private ?string $role = null;
@@ -33,26 +33,26 @@ class ProjectMember
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId(?User $userId): static
+    public function setUser(?User $user): static
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getProjectId(): ?Project
+    public function getProject(): ?Project
     {
-        return $this->projectId;
+        return $this->project;
     }
 
-    public function setProjectId(?Project $projectId): static
+    public function setProject(?Project $project): static
     {
-        $this->projectId = $projectId;
+        $this->project = $project;
 
         return $this;
     }
