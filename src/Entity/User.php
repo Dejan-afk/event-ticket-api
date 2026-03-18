@@ -5,15 +5,32 @@ namespace App\Entity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\UserRepository;
+use ApiPlatform\Metadata\Post;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Dto\UserRegistrationDto;
+use App\State\UserRegistrationProcessor;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'email_unique', columns: ['email'])]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Post(
+            uriTemplate: '/register',
+            input: UserRegistrationDto::class,
+            processor: UserRegistrationProcessor::class,
+            formats: ['json'],
+            security: 'is_granted("PUBLIC_ACCESS")',
+        ),
+        new GetCollection(security: 'is_granted("ROLE_USER")'),
+        new Get(security: 'is_granted("ROLE_USER") or object == user')
+    ]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

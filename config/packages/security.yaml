@@ -19,10 +19,6 @@ security:
                 pattern: ^/(_profiler|_wdt|assets|build)/
                 security: false
 
-        docs:
-            pattern: ^/api/docs
-            security: false
-
         api_login:
             pattern: ^/api/auth
             stateless: true
@@ -44,8 +40,8 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api/auth, roles: PUBLIC_ACCESS }
-        - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS }
         #- { path: ^/api, roles: ROLE_USER }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
