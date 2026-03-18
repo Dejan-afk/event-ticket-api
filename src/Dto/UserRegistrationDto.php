@@ -2,13 +2,14 @@
 
 namespace App\Dto;
 
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class UserRegistrationDto
 {
     #[Assert\Email]
     #[Assert\NotBlank]
+    #[UniqueEntity('email')]
     public string $email;
 
     #[Assert\NotBlank]
